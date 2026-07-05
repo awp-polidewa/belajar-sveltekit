@@ -1,0 +1,15 @@
+<script>
+	let { text, color = 'yellow', disabled = true } = $props();
+</script>
+
+<button style="background: {color}; disabled={disabled}">{text}</button>
+
+<style>
+	button {
+		padding: 10px 20px;
+		border: none;
+		border-radius: 8px;
+		color: white;
+		font-size: 1.1rem;
+	}
+</style>
