@@ -3,45 +3,54 @@
 </script>
 
 <nav>
-	<h2>AwpCode</h2>
+	<h2>Aw<span class="logo-span">pC</span>ode</h2>
 	<ul class:active={open}>
 		<li><a href="/">Home</a></li>
 		<li><a href="/about">About</a></li>
 		<li><a href="/projects">Projects</a></li>
 		<li><a href="/contact">Contact</a></li>
 	</ul>
-	<div class="humbergerMenu" class:active={open} onclick={() => (open = !open)}>
-		<span></span>
-		<span></span>
-		<span></span>
-	</div>
-	<!-- <p>{open}Halo</p> -->
+	<button
+		type="button"
+		class="humbergerMenu"
+		class:active={open}
+		onclick={() => (open = !open)}
+		aria-label="Toggle menu"
+	>
+		<span class="spanX"></span>
+		<span class="spanX"></span>
+		<span class="spanX"></span>
+	</button>
 </nav>
 
 <style>
+	.logo-span {
+		color: var(--color-primary);
+	}
 	nav {
-		width: min(1100px, 90%);
-		margin: auto;
 		display: flex;
 		justify-content: space-between;
 		height: 70px;
 		position: fixed;
 		align-items: center;
-		top: 20px;
+		top: 0; /* Ubah dari 20px ke 0 agar menempel sempurna */
 		right: 0;
 		left: 0;
-		padding: 0 2%;
-
-		background-color: #ff5100;
-
-		backdrop-filter: blur(15px);
-		-webkit-backdrop-filter: blur(15px);
-
-		border: 1px solid rgba(255, 255, 255, 0.2);
-		border-radius: 20px;
+		padding: 0 5%;
+		background-color: #0a0a0a; /* Warna solid */
+		border-bottom: 2px solid var(--color-border);
+		z-index: 1000; /* Penting agar selalu di atas */
 	}
-	.humbergerMenu {
+
+	h2 {
+		font-family: var(--font-accent);
+	}
+	button {
 		display: none;
+		background: none;
+		border: none;
+		padding: 0;
+		cursor: pointer;
 	}
 	ul {
 		display: flex;
@@ -55,9 +64,13 @@
 	li {
 		list-style: none;
 	}
+	button {
+		background-color: none;
+	}
 	a {
 		text-decoration: none;
-		color: rgb(39, 39, 39);
+		/* color: rgb(158, 158, 158); */
+		color: var(--color-text);
 	}
 	a:hover {
 		color: #8a8a8f;
@@ -65,12 +78,12 @@
 
 	@media (max-width: 768px) {
 		ul {
-			background-color: aqua;
+			background-color: var(--color-bg);
 			position: fixed;
 			top: 70px;
 			right: -100%;
-			/* width: 50%; */
-			height: calc(100vh - 90px);
+			/* height: 100vh; */
+			height: calc(100vh - 70px);
 
 			display: flex;
 			flex-direction: column;
@@ -84,35 +97,34 @@
 			right: 20px;
 		}
 
-		.humbergerMenu {
+		button {
 			display: flex;
-			width: 20px;
+			width: 25px;
 			height: 20px;
-			justify-content: space-between;
 			flex-direction: column;
+			justify-content: space-between;
 		}
-		span {
+		.spanX {
 			height: 2px;
-			background-color: black;
 			transition: 0.3s ease;
+			background-color: var(--color-primary);
 		}
-		.active span:nth-child(1) {
+		.humbergerMenu.active .spanX:nth-child(1) {
 			transform: translateY(9px) rotate(45deg);
 		}
 
-		.active span:nth-child(2) {
+		.humbergerMenu.active .spanX:nth-child(2) {
 			opacity: 0;
-			transform: scale(0);
 		}
 
-		.active span:nth-child(3) {
+		.humbergerMenu.active .spanX:nth-child(3) {
 			transform: translateY(-9px) rotate(-45deg);
 		}
 	}
 
 	@media (max-width: 480px) {
 		ul {
-			/* width: 80%; */
+			width: 80%;
 		}
 	}
 </style>
