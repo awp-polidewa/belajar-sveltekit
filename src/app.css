@@ -40,6 +40,15 @@ body {
 	scroll-behavior: smooth;
 }
 
+.container {
+	width: min(90%, 1200px);
+	margin-inline: auto;
+}
+
+section {
+	height: 100vh;
+}
+
 h1,
 h2,
 h3,

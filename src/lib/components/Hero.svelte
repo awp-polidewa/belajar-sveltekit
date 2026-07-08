@@ -124,7 +124,6 @@
 		width: min(90%, 1200px);
 		margin-inline: auto;
 		display: flex;
-		/* background-color: #000000; */
 	}
 	.hero-content1 {
 		max-width: 620px;
@@ -138,12 +137,14 @@
 	.hero-content2 {
 		flex: 3;
 		position: relative;
+		flex-direction: column;
+		gap: 1rem;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 	}
 	.content2-span {
-		position: absolute;
+		/* position: absolute; */
 		bottom: 50px;
 		left: 0;
 		padding-left: 5px;
@@ -289,6 +290,9 @@
 		.content2-span {
 			font-size: 13px;
 			margin-top: 1rem;
+		}
+		section {
+			margin-bottom: 1rem;
 		}
 	}
 </style>
