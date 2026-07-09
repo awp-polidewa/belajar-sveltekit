@@ -3,7 +3,7 @@
 	import Hero from '$lib/components/Hero.svelte';
 	import MousePulsar from '$lib/components/MousePulsar.svelte';
 	import About from '$lib/components/About.svelte';
-	import GithubContributions from '$lib/components/GithubContributions.svelte';
+	import GitHubContributions from '$lib/components/GithubContributions.svelte';
 </script>
 
 <Navbar />
@@ -14,6 +14,6 @@
 <About />
 <section class="github-section">
 	<div class="container">
-		<GithubContributions username="awp-polidewa" />
+		<GitHubContributions username="awp-polidewa" />
 	</div>
 </section>
