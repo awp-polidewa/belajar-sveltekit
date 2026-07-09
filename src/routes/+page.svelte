@@ -3,7 +3,7 @@
 	import Hero from '$lib/components/Hero.svelte';
 	import MousePulsar from '$lib/components/MousePulsar.svelte';
 	import About from '$lib/components/About.svelte';
-	import GitHubContributions from '$lib/components/GithubContributions.svelte';
+	import GitHubContributions from '$lib/components/GitHubContributions.svelte';
 </script>
 
 <Navbar />
