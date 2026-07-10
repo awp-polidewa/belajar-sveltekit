@@ -1,114 +1,118 @@
 <script>
 	import Button from '$lib/components/Button.svelte';
+
+	import MousePulsar from '$lib/components/MousePulsar.svelte';
 	import CometTrail from '$lib/components/CometTrail.svelte';
 </script>
 
-<CometTrail>
-	<section id="home" class="hero" aria-labelledby="hero-title">
-		<div class="container">
-			<div class="hero-content1">
-				<p class="hero-badge">// AVAILABLE FOR WORK</p>
+<MousePulsar>
+	<CometTrail>
+		<section id="home" class="hero" aria-labelledby="hero-title">
+			<div class="container">
+				<div class="hero-content1">
+					<p class="hero-badge">// AVAILABLE FOR WORK</p>
 
-				<header class="hero-header">
-					<p class="hero-greeting">Hi, I'm</p>
+					<header class="hero-header">
+						<p class="hero-greeting">Hi, I'm</p>
 
-					<h1 id="hero-title">Agus Wandi <span class="span-putera">Putera</span></h1>
+						<h1 id="hero-title">Agus Wandi <span class="span-putera">Putera</span></h1>
 
-					<h2 class="hero-role">
-						Full Stack Web Developer
-						<span>&</span>
-						AI Automation Engineer
-					</h2>
-				</header>
+						<h2 class="hero-role">
+							Full Stack Web Developer
+							<span>&</span>
+							AI Automation Engineer
+						</h2>
+					</header>
 
-				<p class="hero-description">
-					Saya membangun website modern, cepat, aman, dan scalable menggunakan SvelteKit, Node.js,
-					Prisma, dan AI Automation.
-				</p>
+					<p class="hero-description">
+						Saya membangun website modern, cepat, aman, dan scalable menggunakan SvelteKit, Node.js,
+						Prisma, dan AI Automation.
+					</p>
 
-				<div class="hero-actions">
-					<Button text="Get started" color="#ff5100" />
-					<!-- Button -->
-					<!-- Button -->
-				</div>
-
-				<nav class="hero-social" aria-label="Social media links">
-					<!-- GitHub -->
-					<!-- LinkedIn -->
-					<!-- Email -->
-				</nav>
-			</div>
-			<div class="hero-content2">
-				<div class="pin-wrap">
-					<div class="pulse-ring"></div>
-					<div class="pulse-ring"></div>
-					<div class="pulse-ring"></div>
-
-					<!-- wrapper ini yg megang animasi bob, jadi text + pin naik turun bareng -->
-					<div class="bob-group">
-						<!-- SVG teks muter ngelilingin pin -->
-						<svg class="orbit-text-svg" width="200" height="200" viewBox="0 0 200 200">
-							<defs>
-								<path
-									id="orbitCirclePalopo"
-									d="M 100,100 m -78,0 a 78,78 0 1,1 156,0 a 78,78 0 1,1 -156,0"
-									fill="none"
-								/>
-							</defs>
-							<text class="orbit-text">
-								<textPath href="#orbitCirclePalopo" startOffset="0%">
-									PALOPO • PALOPO • PALOPO • PALOPO • PALOPO
-								</textPath>
-							</text>
-						</svg>
-
-						<svg
-							class="pin-svg"
-							width="120"
-							height="170"
-							viewBox="0 0 120 170"
-							xmlns="http://www.w3.org/2000/svg"
-						>
-							<defs>
-								<linearGradient id="pinBody" x1="0%" y1="0%" x2="100%" y2="100%">
-									<stop offset="0%" stop-color="#ff5100" />
-									<stop offset="45%" stop-color="#ff5100" />
-									<stop offset="100%" stop-color="#ff5100" />
-								</linearGradient>
-								<radialGradient id="pinHighlight" cx="35%" cy="25%" r="60%">
-									<stop offset="0%" stop-color="#000000" stop-opacity="0.55" />
-									<stop offset="100%" stop-color="#00000" stop-opacity="0" />
-								</radialGradient>
-								<linearGradient id="holeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-									<stop offset="0%" stop-color="#000000" />
-									<stop offset="100%" stop-color="#00000" />
-								</linearGradient>
-								<radialGradient id="holeShade" cx="50%" cy="70%" r="70%">
-									<stop offset="60%" stop-color="#000000" />
-									<stop offset="100%" stop-color="#00000033" />
-								</radialGradient>
-							</defs>
-							<path
-								d="M60 5 C29 5 5 29 5 60 C5 100 60 160 60 160 C60 160 115 100 115 60 C115 29 91 5 60 5 Z"
-								fill="url(#pinBody)"
-							/>
-							<path
-								d="M60 5 C29 5 5 29 5 60 C5 100 60 160 60 160 C60 160 115 100 115 60 C115 29 91 5 60 5 Z"
-								fill="url(#pinHighlight)"
-							/>
-							<circle cx="60" cy="58" r="26" fill="url(#holeGrad)" />
-							<circle cx="60" cy="58" r="26" fill="url(#holeShade)" />
-						</svg>
+					<div class="hero-actions">
+						<Button text="Get started" color="#ff5100" />
+						<!-- Button -->
+						<!-- Button -->
 					</div>
-				</div>
 
-				<p class="content2-span">
-					Currently Building AWPCode Modern Web Platform with AI Automation Status ● In Progress
-				</p>
+					<nav class="hero-social" aria-label="Social media links">
+						<!-- GitHub -->
+						<!-- LinkedIn -->
+						<!-- Email -->
+					</nav>
+				</div>
+				<div class="hero-content2">
+					<div class="pin-wrap">
+						<div class="pulse-ring"></div>
+						<div class="pulse-ring"></div>
+						<div class="pulse-ring"></div>
+
+						<!-- wrapper ini yg megang animasi bob, jadi text + pin naik turun bareng -->
+						<div class="bob-group">
+							<!-- SVG teks muter ngelilingin pin -->
+							<svg class="orbit-text-svg" width="200" height="200" viewBox="0 0 200 200">
+								<defs>
+									<path
+										id="orbitCirclePalopo"
+										d="M 100,100 m -78,0 a 78,78 0 1,1 156,0 a 78,78 0 1,1 -156,0"
+										fill="none"
+									/>
+								</defs>
+								<text class="orbit-text">
+									<textPath href="#orbitCirclePalopo" startOffset="0%">
+										PALOPO • PALOPO • PALOPO • PALOPO • PALOPO
+									</textPath>
+								</text>
+							</svg>
+
+							<svg
+								class="pin-svg"
+								width="120"
+								height="170"
+								viewBox="0 0 120 170"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<defs>
+									<linearGradient id="pinBody" x1="0%" y1="0%" x2="100%" y2="100%">
+										<stop offset="0%" stop-color="#ff5100" />
+										<stop offset="45%" stop-color="#ff5100" />
+										<stop offset="100%" stop-color="#ff5100" />
+									</linearGradient>
+									<radialGradient id="pinHighlight" cx="35%" cy="25%" r="60%">
+										<stop offset="0%" stop-color="#000000" stop-opacity="0.55" />
+										<stop offset="100%" stop-color="#00000" stop-opacity="0" />
+									</radialGradient>
+									<linearGradient id="holeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+										<stop offset="0%" stop-color="#000000" />
+										<stop offset="100%" stop-color="#00000" />
+									</linearGradient>
+									<radialGradient id="holeShade" cx="50%" cy="70%" r="70%">
+										<stop offset="60%" stop-color="#000000" />
+										<stop offset="100%" stop-color="#00000033" />
+									</radialGradient>
+								</defs>
+								<path
+									d="M60 5 C29 5 5 29 5 60 C5 100 60 160 60 160 C60 160 115 100 115 60 C115 29 91 5 60 5 Z"
+									fill="url(#pinBody)"
+								/>
+								<path
+									d="M60 5 C29 5 5 29 5 60 C5 100 60 160 60 160 C60 160 115 100 115 60 C115 29 91 5 60 5 Z"
+									fill="url(#pinHighlight)"
+								/>
+								<circle cx="60" cy="58" r="26" fill="url(#holeGrad)" />
+								<circle cx="60" cy="58" r="26" fill="url(#holeShade)" />
+							</svg>
+						</div>
+					</div>
+
+					<p class="content2-span">
+						Currently Building AWPCode Modern Web Platform with AI Automation Status ● In Progress
+					</p>
+				</div>
 			</div>
-		</div>
-	</section>
-</CometTrail>
+		</section>
+	</CometTrail>
+</MousePulsar>
 
 <style>
 	.hero {

@@ -1,19 +1,19 @@
 <script>
 	import Navbar from '$lib/components/Navbar.svelte';
 	import Hero from '$lib/components/Hero.svelte';
-	import MousePulsar from '$lib/components/MousePulsar.svelte';
 	import About from '$lib/components/About.svelte';
-	import GitHubContributions from '$lib/components/GitHubContributions.svelte';
+	import Skills from '$lib/components/Skills.svelte';
+
+	// import GitHubContributions from '$lib/components/GitHubContributions.svelte';
 </script>
 
 <Navbar />
-
-<MousePulsar>
-	<Hero />
-</MousePulsar>
+<Hero />
 <About />
-<section class="github-section">
+<Skills />
+
+<!-- <section class="github-section">
 	<div class="container">
 		<GitHubContributions username="awp-polidewa" />
 	</div>
-</section>
+</section> -->
