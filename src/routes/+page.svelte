@@ -4,16 +4,11 @@
 	import About from '$lib/components/About.svelte';
 	import Skills from '$lib/components/Skills.svelte';
 
-	// import GitHubContributions from '$lib/components/GitHubContributions.svelte';
+	import GitHubContributions from '$lib/components/GitHubContributions.svelte';
 </script>
 
 <Navbar />
 <Hero />
 <About />
 <Skills />
-
-<!-- <section class="github-section">
-	<div class="container">
-		<GitHubContributions username="awp-polidewa" />
-	</div>
-</section> -->
+<GitHubContributions username="awp-polidewa" />

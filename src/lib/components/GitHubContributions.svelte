@@ -104,70 +104,74 @@
 	}
 </script>
 
-<div class="contrib-card">
-	<BackgroundFire />
-	<div class="contrib-header">
-		<div>
-			<h3>Contributions</h3>
-			<p>A year of commits & debugging sessions <span class="handle">@{username}</span></p>
-		</div>
+<section class="github-section">
+	<div class="container">
+		<div class="contrib-card">
+			<BackgroundFire />
+			<div class="contrib-header">
+				<div>
+					<h3>Contributions</h3>
+					<p>A year of commits & debugging sessions <span class="handle">@{username}</span></p>
+				</div>
 
-		{#if !loading && !error}
-			<div class="contrib-stats">
-				<div><strong>{total.toLocaleString()}</strong><span>TOTAL</span></div>
-				<div><strong>{thisWeekCount}</strong><span>THIS WEEK</span></div>
-				<div><strong>{bestDay}</strong><span>BEST DAY</span></div>
-				<div><strong>{average}</strong><span>AVG/DAY</span></div>
-			</div>
-		{/if}
-	</div>
-
-	{#if loading}
-		<p class="status">Loading...</p>
-	{:else if error}
-		<p class="status error">{error}</p>
-	{:else}
-		<div class="grid-wrap custom-scrollbar">
-			<div class="month-row" style="grid-template-columns: repeat({weeks.length}, 1fr)">
-				{#each labels as label (label.index)}
-					<span class="month-label" style="grid-column:{label.index + 1}">{label.name}</span>
-				{/each}
+				{#if !loading && !error}
+					<div class="contrib-stats">
+						<div><strong>{total.toLocaleString()}</strong><span>TOTAL</span></div>
+						<div><strong>{thisWeekCount}</strong><span>THIS WEEK</span></div>
+						<div><strong>{bestDay}</strong><span>BEST DAY</span></div>
+						<div><strong>{average}</strong><span>AVG/DAY</span></div>
+					</div>
+				{/if}
 			</div>
 
-			<div class="grid" style="grid-template-columns: repeat({weeks.length}, 1fr)">
-				{#each weeks as week, weekIndex (weekIndex)}
-					<div class="week-col">
-						{#each week as day, dayIndex (day ? day.date : `${weekIndex}-${dayIndex}`)}
-							<div
-								class="cell level-{day ? day.level : -1}"
-								class:has-data={!!day}
-								role="presentation"
-								onmouseenter={(e) => showTooltip(e, day)}
-								onmouseleave={hideTooltip}
-							></div>
+			{#if loading}
+				<p class="status">Loading...</p>
+			{:else if error}
+				<p class="status error">{error}</p>
+			{:else}
+				<div class="grid-wrap custom-scrollbar">
+					<div class="month-row" style="grid-template-columns: repeat({weeks.length}, 1fr)">
+						{#each labels as label (label.index)}
+							<span class="month-label" style="grid-column:{label.index + 1}">{label.name}</span>
 						{/each}
 					</div>
-				{/each}
-			</div>
-		</div>
 
-		<div class="legend">
-			<span>Less</span>
-			<div class="cell level-0"></div>
-			<div class="cell level-1"></div>
-			<div class="cell level-2"></div>
-			<div class="cell level-3"></div>
-			<div class="cell level-4"></div>
-			<span>More</span>
-		</div>
+					<div class="grid" style="grid-template-columns: repeat({weeks.length}, 1fr)">
+						{#each weeks as week, weekIndex (weekIndex)}
+							<div class="week-col">
+								{#each week as day, dayIndex (day ? day.date : `${weekIndex}-${dayIndex}`)}
+									<div
+										class="cell level-{day ? day.level : -1}"
+										class:has-data={!!day}
+										role="presentation"
+										onmouseenter={(e) => showTooltip(e, day)}
+										onmouseleave={hideTooltip}
+									></div>
+								{/each}
+							</div>
+						{/each}
+					</div>
+				</div>
 
-		{#if hoveredDay}
-			<div class="cell-tooltip" style="left:{tooltipPos.x}px; top:{tooltipPos.y}px;">
-				<strong>{hoveredDay.count}</strong> contributions on {formatDate(hoveredDay.date)}
-			</div>
-		{/if}
-	{/if}
-</div>
+				<div class="legend">
+					<span>Sedikit</span>
+					<div class="cell level-0"></div>
+					<div class="cell level-1"></div>
+					<div class="cell level-2"></div>
+					<div class="cell level-3"></div>
+					<div class="cell level-4"></div>
+					<span>Gacor</span>
+				</div>
+
+				{#if hoveredDay}
+					<div class="cell-tooltip" style="left:{tooltipPos.x}px; top:{tooltipPos.y}px;">
+						<strong>{hoveredDay.count}</strong> contributions on {formatDate(hoveredDay.date)}
+					</div>
+				{/if}
+			{/if}
+		</div>
+	</div>
+</section>
 
 <style>
 	.contrib-card {
