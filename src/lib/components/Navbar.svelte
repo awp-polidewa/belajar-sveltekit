@@ -94,7 +94,7 @@
 			transition: 0.3s;
 		}
 		ul.active {
-			right: 20px;
+			right: 0px;
 		}
 
 		button {

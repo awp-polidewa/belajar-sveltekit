@@ -26,6 +26,11 @@
 		'Dec'
 	];
 
+	// index 0 = Senin ... index 6 = Minggu. Minggu sekarang dimulai dari Senin
+	// (lihat penyesuaian firstDay di buildWeeks di bawah), jadi urutan label ini
+	// harus ikut Senin -> Minggu, bukan Minggu -> Sabtu kayak default JS Date.
+	const dayLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
 	async function loadData() {
 		try {
 			loading = true;
@@ -49,7 +54,10 @@
 		if (!days.length) return [];
 		const weeks = [];
 		let week = [];
-		const firstDay = new Date(days[0].date).getDay();
+		// getDay() balikin 0=Minggu...6=Sabtu. Karena minggu kita mau mulai dari
+		// Senin, geser jadi 0=Senin...6=Minggu dulu sebelum dipakai buat padding.
+		const rawFirstDay = new Date(days[0].date).getDay();
+		const firstDay = (rawFirstDay + 6) % 7;
 		for (let i = 0; i < firstDay; i++) week.push(null);
 		for (const day of days) {
 			week.push(day);
@@ -129,27 +137,45 @@
 			{:else if error}
 				<p class="status error">{error}</p>
 			{:else}
-				<div class="grid-wrap custom-scrollbar">
-					<div class="month-row" style="grid-template-columns: repeat({weeks.length}, 1fr)">
-						{#each labels as label (label.index)}
-							<span class="month-label" style="grid-column:{label.index + 1}">{label.name}</span>
-						{/each}
+				<div class="graph-row">
+					<!-- kolom label hari, TIDAK ikut scroll horizontal -->
+					<div class="day-labels">
+						<span class="month-row-spacer"></span>
+						<div class="day-label-col">
+							{#each dayLabels as label, i (i)}
+								<span class="day-label">{label}</span>
+							{/each}
+						</div>
 					</div>
 
-					<div class="grid" style="grid-template-columns: repeat({weeks.length}, 1fr)">
-						{#each weeks as week, weekIndex (weekIndex)}
-							<div class="week-col">
-								{#each week as day, dayIndex (day ? day.date : `${weekIndex}-${dayIndex}`)}
-									<div
-										class="cell level-{day ? day.level : -1}"
-										class:has-data={!!day}
-										role="presentation"
-										onmouseenter={(e) => showTooltip(e, day)}
-										onmouseleave={hideTooltip}
-									></div>
-								{/each}
-							</div>
-						{/each}
+					<div class="grid-wrap custom-scrollbar">
+						<div
+							class="month-row"
+							style="grid-template-columns: repeat({weeks.length}, var(--cell-size))"
+						>
+							{#each labels as label (label.index)}
+								<span class="month-label" style="grid-column:{label.index + 1}">{label.name}</span>
+							{/each}
+						</div>
+
+						<div
+							class="grid"
+							style="grid-template-columns: repeat({weeks.length}, var(--cell-size))"
+						>
+							{#each weeks as week, weekIndex (weekIndex)}
+								<div class="week-col">
+									{#each week as day, dayIndex (day ? day.date : `${weekIndex}-${dayIndex}`)}
+										<div
+											class="cell level-{day ? day.level : -1}"
+											class:has-data={!!day}
+											role="presentation"
+											onmouseenter={(e) => showTooltip(e, day)}
+											onmouseleave={hideTooltip}
+										></div>
+									{/each}
+								</div>
+							{/each}
+						</div>
 					</div>
 				</div>
 
@@ -175,23 +201,41 @@
 
 <style>
 	.contrib-card {
+		--cell-size: 17px;
+
 		background: #0d0d12;
 		border: 1px solid rgba(255, 255, 255, 0.06);
 		border-radius: 16px;
 		padding: clamp(16px, 3vw, 32px);
 		color: #e5e5e5;
+
 		display: flex;
 		flex-direction: column;
 		position: relative;
 		overflow: hidden;
 		gap: 2.5rem;
 
-		/* background: #0d0d12; */
-		/* border: 1px solid rgba(255, 255, 255, 0.06); */
-		/* border-radius: 16px; */
-		/* padding: clamp(16px, 3vw, 32px); */
-		/* color: #e5e5e5; */
+		max-width: 1200px;
+		margin-inline: auto;
 	}
+
+	/* .container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	} */
+
+	/* layar kecil: cell lebih kecil biar muat lebih banyak sebelum harus discroll,
+	   dan scrollbar-nya lebih tipis lagi */
+	@media (max-width: 640px) {
+		.contrib-card {
+			--cell-size: 9px;
+		}
+		.day-labels {
+			padding-right: 3px;
+		}
+	}
+
 	.contrib-header,
 	.grid-wrap,
 	.legend,
@@ -238,15 +282,55 @@
 		color: #777;
 	}
 
+	/* --- wrapper yang gabungin kolom label hari + area grid yang bisa discroll --- */
+	.graph-row {
+		position: relative;
+		z-index: 1;
+		display: flex;
+		align-items: flex-start;
+		gap: 6px;
+	}
+
+	/* kolom label hari: fixed, gak ikut overflow-x scroll punya .grid-wrap */
+	.day-labels {
+		display: flex;
+		justify-content: left;
+		flex-direction: column;
+		flex-shrink: 0;
+		padding-right: 1rem;
+	}
+	.month-row-spacer {
+		display: block;
+		height: 0.7rem;
+		line-height: 0.7rem;
+		margin-bottom: 4px;
+	}
+	.day-label-col {
+		display: grid;
+		grid-template-rows: repeat(7, var(--cell-size));
+		gap: 3px;
+	}
+	.day-label {
+		font-size: 0.6rem;
+		line-height: var(--cell-size);
+		color: #777;
+		text-align: right;
+		padding-right: 2px;
+		white-space: nowrap;
+	}
+
 	.grid-wrap {
 		overflow-x: auto;
 		max-width: 100%;
-		padding: 10px;
+		flex: 1;
+		min-width: 0; /* penting: biar flex child boleh menyusut lebih kecil dari content-nya, baru overflow-x jalan */
+		padding: 10px 0;
 		margin: -10px;
 	}
 	.month-row {
 		display: grid;
 		font-size: 0.7rem;
+		line-height: 0.7rem;
 		color: #888;
 		margin-bottom: 4px;
 	}
@@ -256,24 +340,18 @@
 	}
 	.week-col {
 		display: grid;
-		grid-template-rows: repeat(7, 1fr);
+		grid-template-rows: repeat(7, var(--cell-size));
 		gap: 3px;
 	}
 	.cell {
-		width: 100%;
-		aspect-ratio: 1 / 1;
+		width: var(--cell-size);
+		height: var(--cell-size);
 		border-radius: 3px;
 		background: #1e1e24;
-		/* background: #1b1b23; */
 		border: 1.5px solid transparent;
 		box-sizing: border-box;
 		cursor: pointer;
 		transition: all 0.4s ease 0.1s;
-
-		/* transition:
-			transform 0.12s ease,
-			box-shadow 0.12s ease,
-			border-color 0.12s ease; */
 	}
 	.cell.has-data:hover {
 		border-color: #fff;
@@ -284,10 +362,7 @@
 
 		filter: brightness(1.3); /* Membuat efek terang saat hover tanpa merubah size */
 		border-color: rgba(255, 255, 255, 0.4);
-		/* transition: all 0.2s ease; */
 		transition: all 0.2s ease 0s;
-
-		/* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); */
 	}
 
 	.cell-tooltip {
@@ -303,13 +378,9 @@
 		background: #1c1c22;
 		color: #eee;
 		font-size: 0.78rem;
-		/* padding: 7px 12px; */
-		/* border-radius: 8px; */
 		white-space: nowrap;
 		pointer-events: none;
 		z-index: 50;
-		/* box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45); */
-		/* border: 1px solid rgba(255, 255, 255, 0.08); */
 	}
 	.cell-tooltip::after {
 		content: '';
@@ -384,5 +455,11 @@
 
 	.custom-scrollbar::-webkit-scrollbar-thumb:hover {
 		background: rgba(255, 100, 0, 0.9); /* Warna saat di-hover agar lebih jelas */
+	}
+
+	@media (max-width: 640px) {
+		.custom-scrollbar::-webkit-scrollbar {
+			height: 3px;
+		}
 	}
 </style>

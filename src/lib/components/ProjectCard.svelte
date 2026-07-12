@@ -118,7 +118,7 @@
 		position: absolute;
 		inset: 0;
 		display: flex;
-		align-items: center;
+		align-items: flex-end;
 		justify-content: center;
 		gap: 0.4rem;
 		background: rgba(12, 12, 16, 0.55);
@@ -131,6 +131,7 @@
 
 	.cert-card:hover .cert-overlay {
 		opacity: 1;
+		align-items: center;
 	}
 
 	/* --- body ---
