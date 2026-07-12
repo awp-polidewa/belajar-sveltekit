@@ -1,10 +1,13 @@
 <script>
 	// 5 Lensa
-	// State   : props di-drive dari luar, tidak ada state internal selain hover (murni CSS)
-	// Trigger : hover di area gambar -> overlay muncul; klik link/plus -> aksi dari luar (callback prop)
-	// Effect  : overlay fade in, gambar sedikit zoom saat hover
+	// State   : props di-drive dari luar, tidak ada state internal selain hover (murni CSS) + glow (dari TiltCard)
+	// Trigger : hover di gambar -> overlay muncul (CSS). hover di cert-body -> glow ikut kursor (TiltCard).
+	// Effect  : dua hover-zone terpisah: gambar overlay, body glow -- keduanya independen, gak saling nyala
 	// Edge    : title panjang harus wrap 2 baris rapi tanpa overflow; tags kosong -> baris tags disembunyikan total
-	// Boundary: gambar dikasih inset frame tetap (bukan full-bleed) biar konsisten walau rasio gambar beda-beda
+	// Boundary: TiltCard cuma dipasang di sekitar cert-body, BUKAN di cert-image-frame, jadi hover gambar
+	//           gak pernah trigger glow
+
+	import TiltCard from './TiltCard.svelte';
 
 	let {
 		image,
@@ -36,7 +39,7 @@
 		</div>
 	</a>
 
-	<div class="cert-body">
+	<TiltCard class="cert-body">
 		<span class="cert-code">{code}</span>
 		<h3 class="cert-title">{title}</h3>
 		<p class="cert-provider">{provider}</p>
@@ -71,8 +74,9 @@
 				</svg>
 			</a>
 		</div>
+
 		<button class="expand-btn" type="button" onclick={onExpand} aria-label="Expand">+</button>
-	</div>
+	</TiltCard>
 </article>
 
 <style>
@@ -81,19 +85,19 @@
 		display: flex;
 		flex-direction: column;
 		width: 100%;
-		max-width: 300px;
+		min-width: 250px;
 		border-radius: 22px;
-		overflow: visible;
+		overflow: hidden;
 		background: #17171e;
-		padding-bottom: 1.6rem;
+		/* padding-bottom: 1.6rem; */
 	}
 
 	/* --- image, inset frame with dark gap around it --- */
 	.cert-image-frame {
 		position: relative;
 		display: block;
-		margin: 10px 10px 0;
-		border-radius: 14px;
+		/* margin: 10px 10px 0; */
+		border-radius: 14px 14px 0 0;
 		overflow: hidden;
 		aspect-ratio: 4 / 3;
 	}
@@ -129,8 +133,11 @@
 		opacity: 1;
 	}
 
-	/* --- body --- */
-	.cert-body {
+	/* --- body ---
+     note: .cert-body is now rendered by <TiltCard class="cert-body">, so this class
+     is applied on TiltCard's own wrapper div (position:relative; overflow:hidden already
+     comes from TiltCard's .tilt-glow class, this just adds the layout/spacing on top) */
+	:global(.cert-body) {
 		display: flex;
 		flex-direction: column;
 		gap: 0.55rem;
@@ -196,12 +203,9 @@
 		color: #6c6c82;
 	}
 
-	/* --- floating plus button, half-overlapping the bottom edge --- */
 	.expand-btn {
-		/* position: absolute; */
-
-		left: 1.3rem;
-		bottom: -0.9rem;
+		align-self: flex-start;
+		margin: 0.6rem 0 1rem;
 		width: 1.9rem;
 		height: 1.9rem;
 		border-radius: 50%;
