@@ -25,6 +25,11 @@
 </section>
 
 <style>
+	.container {
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+	}
 	.skills-grid {
 		display: grid;
 
