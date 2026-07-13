@@ -29,6 +29,7 @@
 	class="tilt-glow {className}"
 	class:is-active={isActive}
 	style="--x: {x}%; --y: {y}%;"
+	role="presentation"
 	onmousemove={handleMouseMove}
 	onmouseleave={handleMouseLeave}
 >
@@ -39,6 +40,7 @@
 	.tilt-glow {
 		position: relative;
 		overflow: hidden;
+		border-radius: 24px;
 	}
 
 	.tilt-glow::before {
@@ -47,7 +49,7 @@
 		inset: -40%;
 		background: radial-gradient(
 			640px circle at var(--x, 50%) var(--y, 50%),
-			rgba(116, 116, 116, 0.22),
+			rgba(143, 142, 142, 0.22),
 			transparent 65%
 		);
 		opacity: 0;

@@ -29,7 +29,9 @@
 	// index 0 = Senin ... index 6 = Minggu. Minggu sekarang dimulai dari Senin
 	// (lihat penyesuaian firstDay di buildWeeks di bawah), jadi urutan label ini
 	// harus ikut Senin -> Minggu, bukan Minggu -> Sabtu kayak default JS Date.
-	const dayLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+	// const dayLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+	// index 0 = Minggu ... index 6 = Sabtu, sama kayak GitHub asli
+	const dayLabels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 	async function loadData() {
 		try {
@@ -54,11 +56,10 @@
 		if (!days.length) return [];
 		const weeks = [];
 		let week = [];
-		// getDay() balikin 0=Minggu...6=Sabtu. Karena minggu kita mau mulai dari
-		// Senin, geser jadi 0=Senin...6=Minggu dulu sebelum dipakai buat padding.
-		const rawFirstDay = new Date(days[0].date).getDay();
-		const firstDay = (rawFirstDay + 6) % 7;
+		// getDay() udah pas: 0=Minggu...6=Sabtu, sama kayak dayLabels di atas
+		const firstDay = new Date(days[0].date).getDay();
 		for (let i = 0; i < firstDay; i++) week.push(null);
+
 		for (const day of days) {
 			week.push(day);
 			if (week.length === 7) {
@@ -66,7 +67,12 @@
 				week = [];
 			}
 		}
-		if (week.length) weeks.push(week);
+
+		if (week.length) {
+			while (week.length < 7) week.push(null);
+			weeks.push(week);
+		}
+
 		return weeks;
 	}
 
@@ -351,18 +357,34 @@
 		border: 1.5px solid transparent;
 		box-sizing: border-box;
 		cursor: pointer;
-		transition: all 0.4s ease 0.1s;
+		/* transition: all 0.4s ease 0.1s; */
+
+		transform: scale(1);
+		transition:
+			transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+			background-color 0.5s ease,
+			border-color 0.5s ease,
+			box-shadow 0.5s ease;
 	}
 	.cell.has-data:hover {
+		transform: scale(1.35);
 		border-color: #fff;
 		box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
 		z-index: 2;
 		position: relative;
-		transform: none;
+		/* transform: none; */
 
 		filter: brightness(1.3); /* Membuat efek terang saat hover tanpa merubah size */
 		border-color: rgba(255, 255, 255, 0.4);
 		transition: all 0.2s ease 0s;
+
+		filter: brightness(1.3);
+		border-color: rgba(255, 255, 255, 0.4);
+		transition:
+			transform 0.15s ease-out,
+			background-color 0.15s ease,
+			border-color 0.15s ease,
+			box-shadow 0.15s ease;
 	}
 
 	.cell-tooltip {
