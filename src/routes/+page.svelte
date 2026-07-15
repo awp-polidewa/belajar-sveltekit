@@ -6,6 +6,7 @@
 	import GitHubContributions from '$lib/components/GitHubContributions.svelte';
 	import Projects from '$lib/components/Projects.svelte';
 	import Footer from '$lib/components/Footer.svelte';
+	import Counts from '$lib/components/counts.svelte';
 </script>
 
 <Navbar />
@@ -15,3 +16,4 @@
 <GitHubContributions username="awp-polidewa" />
 <Projects />
 <Footer />
+<Counts />
